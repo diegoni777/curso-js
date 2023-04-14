@@ -1,32 +1,39 @@
 
 import express from "express"
 import mongoose from "mongoose";
-
+import bodyParser from "body-parser";
 import rutesv1 from "./router/RutasWeb.js"
 import rutesv2 from "./router/Mascotas.js"
+import crear from "./router/Mascotas.js"
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+
+import dotenv from "dotenv"
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
-
-const app = express();
-const port = 3000;
+dotenv.config();
 
 //Conexion a base de datos//
-/*const mongoose = require('mongoose');
+const PORT = process.env.PORT || 3000;
+const uri =  `mongodb://${process.env.USER}:${process.env.PASSWORD}@${'216.98.8.92'}:${'27017'}/${process.env.DBNAME}?authSource=admin`;
 
-const user = 'usuariobd'
-const password = 'passbd'
-const dbName = 'veterinaria'
-
-const uri = `mongodb+srv://${usuario}:${password}@cluster0.ncdk5.mongodb.net/${dbName}?retryWrites=true&w=majority`;
-
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(()=> console.log('conectado a mongodb')) 
-  .catch(e => console.log('error de conexión', e))*/
-
+mongoose
+  .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    //useCreateIndex:true
+  })
+  .then((res) => console.log(`Conexion con mongo al host: ${'216.98.8.92'} & Base de Datos ${process.env.DBNAME}`))
+  .catch((err) => {
+    console.log({ err });
+  });
 
 
 //motor de vistas//
@@ -36,7 +43,8 @@ app.use(express.static(__dirname + "/public"));
 
 //rutas web//
 app.use('/', rutesv1);
-app.use('/', rutesv2);
+//app.use('/', rutesv2);
+app.use('/mascotas', crear);
 
 
   app.use((req, res, next) => {
@@ -45,6 +53,6 @@ app.use('/', rutesv2);
 });
   });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Example app listening at http://localhost:${PORT}`);
 });

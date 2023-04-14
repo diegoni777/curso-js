@@ -1,0 +1,103 @@
+<%-include("template/cabecera",{tituloweb : "Pagina de edicion"})%>
+
+<body>
+    <div class="container">
+        <h1 class="text-primary">Detalle de Registro de Mascota</h1>
+        <% if (error) { %>
+            <p>
+                <%= mensaje %>
+            </p>
+            <a href="/mascotas" class="btn btn-black btn-block my-4">Volver a Mascotas</a>
+        <% } %>
+        <% if (!error) { %>
+
+         <form action="">
+            <input
+            value="<%= mascota.nombre %>"
+            name="nombre"
+            class="form-control my-2"
+            type="text"
+            >
+
+
+       
+            <input
+            value="<%= mascota.descripcion %>"
+            name="descripcion"
+            class="form-control my-2"
+            type="text"
+            >
+        
+        <button class="btn btn-warning">
+            Editar
+        </button>
+
+         </form>
+
+
+            <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">nombre</th>
+                  <th scope="col">descripcion</th>
+                  <th scope="col">Accion</th>
+                </tr>
+              </thead>
+            <tbody>
+            <tr>
+                <th scope="row"><%=mascota.id %></th>
+                <td><%=mascota.nombre %></td>
+                <td><%=mascota.descripcion  %></td>
+
+                <td><button class="btn btn-danger"
+                    id="btnEliminar"
+                    data-id="<%=mascota.id %>"
+                    
+                    >
+                    Eliminar
+                </button>
+                </td>
+
+                </t>
+            </tbody>
+        </table>
+        </div>
+    </body>
+    
+    </html>
+    <%-include("template/footer") %>
+         
+        <% } %>
+
+        
+    <script>
+        const btnEliminar = document.querySelector('#btnEliminar')
+        btnEliminar.addEventListener('click',async() => {
+            console.log('me diste click')
+            const id = btnEliminar.dataset.id
+            console.log('id',id)
+            
+            try {
+               
+                const data = await fetch(`/mascotas/${id}`,{
+                    method : 'delete'
+                })
+                const res = await data.json()
+                console.log(res)
+
+                if (res.estado){
+                   window.location.href = '/mascotas'
+                }
+                else{
+                    console.log(res)
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    </script>
+
+
+        

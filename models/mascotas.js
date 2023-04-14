@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const mascotasSchema = Schema({
@@ -8,6 +8,5 @@ const mascotasSchema = Schema({
 
 // crear modelo//
 
-const Mascota = mongoose.model('Mascota',mascotasSchema);
-
-module.exports = Mascota;
+const Mascotas = mongoose.model('Mascota',mascotasSchema);
+export default Mascotas;

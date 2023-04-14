@@ -1,0 +1,24 @@
+<%-include("template/cabecera",{tituloweb : "Pagina de crear"})%>
+
+<body>
+    <div class="container">
+        <h1 class="text-primary">Crear Nueva Mascota</h1>
+        <form action="/mascotas" method="POST">
+
+            <h3> <label> Nombre de la mascota </label> </h3>
+            <input type="text" name="nombre" class="form-control" placeholder="ej. el peluches" required>
+
+
+            <h3><label>Descripcion de la Mascota</label></h3>
+            <input type="text" name="descripcion" class="form-control" placeholder="ej. corte de pelo" required>
+
+            <button type="submit" class="btn btn-success btn-block my-4">
+                    Registrar Mascota
+            </button>
+            
+        </form>
+    </div>
+</body>
+
+</html>
+<%-include("template/footer") %>

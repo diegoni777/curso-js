@@ -1,7 +1,14 @@
 <%-include("template/cabecera", {tituloweb : "Pagina de mascotas"}) %>
+<br></br>
+
 <div class="container">
+<h1>CRUD Mascotas</h1>
 
+    <a class="btn btn-success btn-block my-4" href="/mascotas/crear">
 
+    Crear Nuevo Registro
+  </a>
+  
             <table class="table">
                 <thead>
                   <tr>
@@ -21,7 +28,25 @@
                           <th scope="row"><%=mascota.id %></th>
                           <td><%=mascota.nombre %></td>
                           <td><%=mascota.descripcion  %></td> 
-                          <td>@mod</td> 
+                          <td>
+                            
+
+                          <button
+                          class="btn btn-warning  btn-sm"
+                          data-id="<%= mascota.id %>"
+                          >
+                          Editar
+                          </button>
+
+                          <a
+                          class="btn btn-info  btn-sm"
+                          href="mascotas/<%= mascota.id %>"
+                          >
+                          Detalle
+                        </a>
+
+                        </td>
+                          </tr>
                         </tr>
                        
                       <% }) %>
